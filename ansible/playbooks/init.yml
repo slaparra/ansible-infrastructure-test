@@ -1,0 +1,17 @@
+---
+- hosts: server
+
+  remote_user: root
+
+  gather_facts: no
+
+  pre_tasks:
+
+    - name: 'Ubuntu update'
+      raw: apt-get update
+
+    - name: 'Ubuntu upgrade'
+      raw: apt-get -y upgrade
+
+    - name: 'Install python simple json'
+      raw: sudo apt-get -y install python-simplejson

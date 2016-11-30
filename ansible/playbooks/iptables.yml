@@ -1,0 +1,22 @@
+---
+- hosts: server
+
+  tasks:
+    - name: flush iptables
+      shell: iptables -F
+
+    - name: copy iptables rules
+      template: src=../templates/iptables.test.rules dest=/etc/
+
+    - name: activate new rules
+      shell: iptables-restore < /etc/iptables.test.rules
+
+    - name: save rules to the master iptables file
+      shell: iptables-save > /etc/iptables.up.rules
+
+    - name: copy iptables to rerun on reboot
+      template: src=../templates/iptables dest=/etc/network/if-pre-up.d/ mode=0700
+
+    - name: save rules to the master iptables file
+      file: path=/etc/network/if-pre-up.d/iptables mode="u+x"
+

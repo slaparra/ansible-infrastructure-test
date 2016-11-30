@@ -1,0 +1,36 @@
+---
+- hosts: server
+
+  vars:
+    domain: aDomain.com
+
+  tasks:
+    - name: Install php packages
+      apt: name={{ item }} state=latest
+      with_items:
+        - php7.0
+        - libapache2-mod-php7.0
+        - php7.0-curl
+        - php7.0-mcrypt
+        - php7.0-intl
+        - php7.0-bcmath
+        - php7.0-xml
+        - php7.0-opcache
+        - php7.0-mysql
+        - php7.0-json
+        - php7.0-cli
+        - mysql-server
+        - mysql-client
+        - php7.0-mysql
+      notify:
+        - restart apache2
+
+    - name: create /var/www/{{ domain }} directory
+      file: dest=/var/www/{{ domain }} state=directory owner=www-data group=www-data mode=0744
+
+    - name: copy index web
+      template: src=../templates/index.html dest=/var/www/{{ domain }}/
+
+  handlers:
+    - name: restart apache2
+      service: name=apache2 state=restarted
