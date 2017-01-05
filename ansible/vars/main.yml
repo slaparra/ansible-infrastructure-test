@@ -1,0 +1,13 @@
+---
+workspace: /root
+hostname: vagrantHostname
+ntp_timezone: Europe/Madrid
+
+apache_enablerepo: remi
+apache_vhosts:
+  - {servername: "vagrantHostname", documentroot: "/var/www/html"}
+
+php_enablerepo: remi
+
+mysql_root_password: root
+mysql_enablerepo: remi

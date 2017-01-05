@@ -1,5 +1,0 @@
----
-- include: playbooks/init.yml
-- include: playbooks/iptables.yml
-- include: playbooks/apache.yml
-- include: playbooks/php.yml

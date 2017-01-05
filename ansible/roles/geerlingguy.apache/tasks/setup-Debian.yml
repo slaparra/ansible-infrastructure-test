@@ -1,0 +1,7 @@
+---
+- name: Update apt cache.
+  raw: apt-get update
+
+- name: Ensure Apache is installed on Debian.
+  apt: "name={{ item }} state=installed"
+  with_items: "{{ apache_packages }}"

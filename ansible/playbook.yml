@@ -1,0 +1,14 @@
+---
+# Ansible playbook for a Debian server.
+- hosts: vagrantHostname
+  gather_facts: yes
+  become: yes
+
+  vars_files:
+    - vars/main.yml
+
+  roles:
+    - geerlingguy.firewall
+    - geerlingguy.dotdeb
+    - geerlingguy.apache
+    - geerlingguy.php
