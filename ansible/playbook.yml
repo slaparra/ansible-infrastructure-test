@@ -1,6 +1,6 @@
 ---
 # Ansible playbook for a Debian server.
-- hosts: vagrantHostname
+- hosts: web01
   gather_facts: yes
   become: yes
 
@@ -9,6 +9,6 @@
 
   roles:
     - geerlingguy.firewall
-    - geerlingguy.dotdeb
+    - geerlingguy.repo-dotdeb
     - geerlingguy.apache
     - geerlingguy.php

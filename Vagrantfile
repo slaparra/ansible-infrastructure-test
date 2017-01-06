@@ -4,23 +4,25 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "debian/jessie64"
-  config.ssh.insert_key = true
+  config.vm.define :web01 do |web01|
+      web01.vm.box = "debian/jessie64"
+      web01.ssh.insert_key = true
+  end
+
+  config.vm.synced_folder "src", "/var/www/html", type: "rsync",
+    rsync__exclude: ".git/"
 
   config.vm.provider :virtualbox do |v|
-    v.name = "vagrantHostname"
+    v.name = "web01"
     v.memory = 2048
     v.cpus = 1
     v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     v.customize ["modifyvm", :id, "--ioapic", "on"]
   end
 
-  config.vm.hostname = "vagrantHostname"
+  config.vm.hostname = "web01"
   config.vm.network :private_network, ip: "192.168.69.69"
 
-  # Set the name of the VM. See: http://stackoverflow.com/a/17864388/100134
-  config.vm.define :vagrantHostname do |vagrantHostname|
-  end
 
   # Ansible provisioner.
   config.vm.provision "ansible" do |ansible|
